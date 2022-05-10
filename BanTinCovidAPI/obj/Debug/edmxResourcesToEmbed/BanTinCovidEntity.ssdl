@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BANTINCOVIDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="NHANVIEN">
+    <Key>
+      <PropertyRef Name="MANHANVIEN" />
+    </Key>
+    <Property Name="MANHANVIEN" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="CCCD" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="HOTEN" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SODT" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="100" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TrangThaiXoa" Type="int" />
+    <Property Name="MATKHAU" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="NGAYSINH" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TINTUC">
+    <Key>
+      <PropertyRef Name="MATINTUC" />
+    </Key>
+    <Property Name="MATINTUC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENTINTUC" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="MATHELOAI" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NOIDUNG" Type="ntext" Nullable="false" />
+    <Property Name="NOIDUNGNGAN" Type="nvarchar" MaxLength="500" />
+    <Property Name="TACGIA" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MANHANVIEN" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="NGAY" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TINHHINHCHUNG">
+    <Key>
+      <PropertyRef Name="NGAY" />
+    </Key>
+    <Property Name="NGAY" Type="datetime" Nullable="false" />
+    <Property Name="CANHIEM" Type="int" Nullable="false" />
+    <Property Name="CHUAKHOI" Type="int" Nullable="false" />
+    <Property Name="TUVONG" Type="int" Nullable="false" />
+    <Property Name="MANHANVIEN" Type="varchar" MaxLength="12" />
+  </EntityType>
+  <EntityType Name="THELOAI">
+    <Key>
+      <PropertyRef Name="MATHELOAI" />
+    </Key>
+    <Property Name="MATHELOAI" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TENTHELOAI" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="TRANGTHAI" Type="int" />
+    <Property Name="MOTA" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_TINTUC_NHANVIEN">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="1" />
+    <End Role="TINTUC" Type="Self.TINTUC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MANHANVIEN" />
+      </Principal>
+      <Dependent Role="TINTUC">
+        <PropertyRef Name="MANHANVIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TINTUC_THELOAI">
+    <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="1" />
+    <End Role="TINTUC" Type="Self.TINTUC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="THELOAI">
+        <PropertyRef Name="MATHELOAI" />
+      </Principal>
+      <Dependent Role="TINTUC">
+        <PropertyRef Name="MATHELOAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TINHHINHCHUNG_NHANVIEN">
+    <End Role="NHANVIEN" Type="Self.NHANVIEN" Multiplicity="0..1" />
+    <End Role="TINHHINHCHUNG" Type="Self.TINHHINHCHUNG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NHANVIEN">
+        <PropertyRef Name="MANHANVIEN" />
+      </Principal>
+      <Dependent Role="TINHHINHCHUNG">
+        <PropertyRef Name="MANHANVIEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BANTINCOVIDModelStoreContainer">
+    <EntitySet Name="NHANVIEN" EntityType="Self.NHANVIEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TINTUC" EntityType="Self.TINTUC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TINHHINHCHUNG" EntityType="Self.TINHHINHCHUNG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TINTUC_NHANVIEN" Association="Self.FK_TINTUC_NHANVIEN">
+      <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+      <End Role="TINTUC" EntitySet="TINTUC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TINTUC_THELOAI" Association="Self.FK_TINTUC_THELOAI">
+      <End Role="THELOAI" EntitySet="THELOAI" />
+      <End Role="TINTUC" EntitySet="TINTUC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TINHHINHCHUNG_NHANVIEN" Association="Self.FK_TINHHINHCHUNG_NHANVIEN">
+      <End Role="NHANVIEN" EntitySet="NHANVIEN" />
+      <End Role="TINHHINHCHUNG" EntitySet="TINHHINHCHUNG" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
